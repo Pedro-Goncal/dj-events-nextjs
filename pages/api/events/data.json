@@ -1,0 +1,52 @@
+{
+  "events": [
+    {
+      "id": "1",
+      "name": "Throwback Thursday with Night Awl",
+      "slug": "throwback-thursday-with-nigh-awl",
+      "venu": "Fabric",
+      "address": "77A Charterhouse St, London EC1M 6HJ",
+      "performers": "Night Awl",
+      "date": "June 09, 2021",
+      "time": "01:00 AM GMT",
+      "description": "Featuring deep cuts, party anthems and remixes nostalgic songs from two of the best decades of music with the very best music from the 80's and 90's",
+      "image": "/images/sample/event1.jpg"
+    },
+    {
+      "id": "2",
+      "name": "Boom Festival",
+      "slug": "boom-festival",
+      "venu": "Open air",
+      "address": "Costa da Caparica,  Portugal",
+      "performers": "Boris",
+      "date": "August 14, 2021",
+      "time": "10:00 PM GMT",
+      "description": "It's looking more and more like we will be seeing events return in the summer! To celebrate this we are returning with the classic Boom festival.",
+      "image": "/images/sample/event2.jpg"
+    },
+    {
+      "id": "3",
+      "name": "Encore Night Boat Party",
+      "slug": "encore-night-boat-party",
+      "venu": "Encore",
+      "address": "675 Water St New York, New York",
+      "performers": "Bad Boy bill",
+      "date": "September 2, 2021",
+      "time": "09:00 PM GMT",
+      "description": "Who is ready to party? I mean in the middle of the water, a boat with good music and drinks. If thats you then you made it to the right place ",
+      "image": "/images/sample/event3.jpg"
+    },
+    {
+      "id": "4",
+      "name": "Jam Concert Live",
+      "slug": "jam-concert-live",
+      "venu": "Club Ozone",
+      "address": "70 W 115th St New York, New York",
+      "performers": "Beastie Boys",
+      "date": "September 19, 2021",
+      "time": "07:00 PM GMT",
+      "description": "No Sleep Till Brooklyn... It's the Beastie Boys",
+      "image": "/images/sample/event4.jpg"
+    }
+  ]
+}
