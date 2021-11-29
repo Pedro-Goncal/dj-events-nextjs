@@ -5,6 +5,7 @@ import Link from 'next/link';
 
 //Utils
 import { API_URL } from '../../config/index';
+import { parseCookies } from '../../helpers/index';
 
 //Styles
 import styles from '../../styles/Form.module.css';
@@ -14,11 +15,11 @@ import 'react-toastify/dist/ReactToastify.css';
 //Layout HOC
 import Layout from '../../components/Layout';
 
-const AddEventPage = () => {
+const AddEventPage = ({ token }) => {
   const [values, setValues] = useState({
-    mame: '',
+    name: '',
     performers: '',
-    venus: '',
+    venue: '',
     address: '',
     date: '',
     time: '',
@@ -43,7 +44,7 @@ const AddEventPage = () => {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        // Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify(values),
     });
@@ -62,21 +63,18 @@ const AddEventPage = () => {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-
     setValues({ ...values, [name]: value });
   };
 
   return (
     <Layout title="Add New Event">
-      <Link href="/events">
-        <a>{'< '}Go Back</a>
-      </Link>
-      <ToastContainer />
+      <Link href="/events">Go Back</Link>
       <h1>Add Event</h1>
+      <ToastContainer />
       <form onSubmit={handleSubmit} className={styles.form}>
         <div className={styles.grid}>
           <div>
-            <lable htmlFor="name">Event Name</lable>
+            <label htmlFor="name">Event Name</label>
             <input
               type="text"
               id="name"
@@ -85,72 +83,83 @@ const AddEventPage = () => {
               onChange={handleInputChange}
             />
           </div>
-
           <div>
-            <lable htmlFor="performers">Performers</lable>
+            <label htmlFor="performers">Performers</label>
             <input
               type="text"
-              id="performers"
               name="performers"
+              id="performers"
               value={values.performers}
               onChange={handleInputChange}
             />
           </div>
           <div>
-            <lable htmlFor="venue">Venue</lable>
+            <label htmlFor="venue">Venue</label>
             <input
               type="text"
-              id="venue"
               name="venue"
+              id="venue"
               value={values.venue}
               onChange={handleInputChange}
             />
           </div>
           <div>
-            <lable htmlFor="address">Address</lable>
+            <label htmlFor="address">Address</label>
             <input
               type="text"
-              id="address"
               name="address"
+              id="address"
               value={values.address}
               onChange={handleInputChange}
             />
           </div>
           <div>
-            <lable htmlFor="date">Date</lable>
+            <label htmlFor="date">Date</label>
             <input
               type="date"
-              id="date"
               name="date"
+              id="date"
               value={values.date}
               onChange={handleInputChange}
             />
           </div>
           <div>
-            <lable htmlFor="time">Time</lable>
+            <label htmlFor="time">Time</label>
             <input
               type="text"
-              id="time"
               name="time"
+              id="time"
               value={values.time}
               onChange={handleInputChange}
             />
           </div>
         </div>
+
         <div>
-          <lable htmlFor="description">Event description</lable>
+          <label htmlFor="description">Event Description</label>
           <textarea
             type="text"
             name="description"
             id="description"
             value={values.description}
             onChange={handleInputChange}
-          />
+          ></textarea>
         </div>
+
         <input type="submit" value="Add Event" className="btn" />
       </form>
     </Layout>
   );
 };
+
+export async function getServerSideProps({ req }) {
+  const { token } = parseCookies(req);
+
+  return {
+    props: {
+      token,
+    },
+  };
+}
 
 export default AddEventPage;

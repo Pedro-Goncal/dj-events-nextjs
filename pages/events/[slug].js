@@ -1,48 +1,27 @@
 import Link from 'next/link';
 import Image from 'next/image';
 
+//Router
+import { useRouter } from 'next/router';
+
 //Components
 import Layout from '../../components/Layout';
+// import EventMap from '@/components/EventMap';
 
 //Utils
 import { API_URL } from 'config';
 
 //Styles
 import styles from '../../styles/event.module.css';
-import { FaPencilAlt, FaTimes } from 'react-icons/fa';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { useRouter } from 'next/router';
 
 const EventPage = ({ evt }) => {
   const router = useRouter();
 
-  const deleteEvent = async (e) => {
-    e.preventDefault();
-
-    if (confirm('Are you sure?')) {
-      const res = await fetch(`${API_URL}/events/${evt.id}`, {
-        method: 'DELETE',
-      })
-        .then((res) => res.json())
-        .then((res) => router.push('/events'))
-        .catch((error) => toast.error(error.message));
-    }
-  };
-
   return (
     <Layout>
       <div className={styles.event}>
-        <div className={styles.controls}>
-          <Link href={`/events/edit/${evt.id}`}>
-            <a>
-              <FaPencilAlt /> Edit Event
-            </a>
-          </Link>
-          <a href="#" className={styles.delete} onClick={deleteEvent}>
-            <FaTimes /> Delete Event
-          </a>
-        </div>
         <span>
           {new Date(evt.date).toLocaleDateString('en-GB', {
             weekday: 'long',
@@ -70,6 +49,7 @@ const EventPage = ({ evt }) => {
         <p>{evt.description}</p>
         <h3>Venue: {evt.venue}</h3>
         <p>{evt.address}</p>
+        {/* <EventMap evt={evt} /> */}
         <Link href="/events">
           <a className={styles.back}>{'<'} Go Back</a>
         </Link>

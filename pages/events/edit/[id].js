@@ -16,6 +16,7 @@ import Link from 'next/link';
 
 //Utils
 import { API_URL } from '../../../config/index';
+import { parseCookies } from '../../../helpers/index';
 import moment from 'moment';
 
 //Styles
@@ -24,7 +25,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { FaImage } from 'react-icons/fa';
 
-const EditEventPage = ({ evt }) => {
+const EditEventPage = ({ evt, token }) => {
   const [values, setValues] = useState({
     name: evt.name,
     performers: evt.performers,
@@ -57,14 +58,14 @@ const EditEventPage = ({ evt }) => {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
-        // Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify(values),
     });
 
     if (!res.ok) {
       if (res.status === 403 || res.status === 401) {
-        toast.error('No token included');
+        toast.error('Unauthorized');
         return;
       }
       toast.error('Something Went Wrong');
@@ -76,29 +77,25 @@ const EditEventPage = ({ evt }) => {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-
     setValues({ ...values, [name]: value });
   };
 
-  const imageUplodaded = async (e) => {
-    const data = await fetch(`${API_URL}/events/${evt.id}`).then((res) =>
-      res.json()
-    );
+  const imageUploaded = async (e) => {
+    const res = await fetch(`${API_URL}/events/${evt.id}`);
+    const data = await res.json();
     setImagePreview(data.image.formats.thumbnail.url);
     setShowModal(false);
   };
 
   return (
     <Layout title="Add New Event">
-      <Link href="/events">
-        <a>{'< '}Go Back</a>
-      </Link>
-      <ToastContainer />
+      <Link href="/events">Go Back</Link>
       <h1>Edit Event</h1>
+      <ToastContainer />
       <form onSubmit={handleSubmit} className={styles.form}>
         <div className={styles.grid}>
           <div>
-            <lable htmlFor="name">Event Name</lable>
+            <label htmlFor="name">Event Name</label>
             <input
               type="text"
               id="name"
@@ -107,68 +104,69 @@ const EditEventPage = ({ evt }) => {
               onChange={handleInputChange}
             />
           </div>
-
           <div>
-            <lable htmlFor="performers">Performers</lable>
+            <label htmlFor="performers">Performers</label>
             <input
               type="text"
-              id="performers"
               name="performers"
+              id="performers"
               value={values.performers}
               onChange={handleInputChange}
             />
           </div>
           <div>
-            <lable htmlFor="venue">Venue</lable>
+            <label htmlFor="venue">Venue</label>
             <input
               type="text"
-              id="venue"
               name="venue"
+              id="venue"
               value={values.venue}
               onChange={handleInputChange}
             />
           </div>
           <div>
-            <lable htmlFor="address">Address</lable>
+            <label htmlFor="address">Address</label>
             <input
               type="text"
-              id="address"
               name="address"
+              id="address"
               value={values.address}
               onChange={handleInputChange}
             />
           </div>
           <div>
-            <lable htmlFor="date">Date</lable>
+            <label htmlFor="date">Date</label>
             <input
               type="date"
-              id="date"
               name="date"
+              id="date"
               value={moment(values.date).format('yyyy-MM-DD')}
               onChange={handleInputChange}
             />
           </div>
           <div>
-            <lable htmlFor="time">Time</lable>
+            <label htmlFor="time">Time</label>
             <input
               type="text"
-              id="time"
               name="time"
+              id="time"
               value={values.time}
               onChange={handleInputChange}
             />
           </div>
         </div>
+
         <div>
-          <lable htmlFor="description">Event description</lable>
+          <label htmlFor="description">Event Description</label>
           <textarea
             type="text"
             name="description"
             id="description"
             value={values.description}
             onChange={handleInputChange}
-          />
+          ></textarea>
         </div>
+
         <input type="submit" value="Update Event" className="btn" />
       </form>
 
@@ -180,28 +178,37 @@ const EditEventPage = ({ evt }) => {
           <p>No image uploaded</p>
         </div>
       )}
+
       <div>
-        <button className="btn-secondary" onClick={() => setShowModal(true)}>
+        <button
+          onClick={() => setShowModal(true)}
+          className="btn-secondary btn-icon"
+        >
           <FaImage /> Set Image
         </button>
       </div>
+
       <Modal show={showModal} onClose={() => setShowModal(false)}>
-        <ImageUpload evtId={evt.id} imageUploaded={imageUplodaded} />
+        <ImageUpload
+          evtId={evt.id}
+          imageUploaded={imageUploaded}
+          token={token}
+        />
       </Modal>
     </Layout>
   );
 };
 
 export async function getServerSideProps({ params: { id }, req }) {
-  console.log(req.headers.cookie);
+  const { token } = parseCookies(req);
 
-  const evt = await fetch(`${API_URL}/events/${id}`)
-    .then((res) => res.json())
-    .catch((err) => console.log(err.message));
+  const res = await fetch(`${API_URL}/events/${id}`);
+  const evt = await res.json();
 
   return {
     props: {
       evt,
+      token,
     },
   };
 }
