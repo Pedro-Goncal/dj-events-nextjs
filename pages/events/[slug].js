@@ -58,27 +58,8 @@ const EventPage = ({ evt }) => {
   );
 };
 
-// export async function getStaticPaths(){
-
-//   const res = await fetch(`${API_URL}/api/events`)
-//   const events = await res.json()
-
-//   const paths = events.map(evt => ({
-//     params: {slug: evt.slug}
-//   }))
-
-//   return {
-//     paths
-//      falback: false
-
-//   }
-
-// }
-
 export async function getServerSideProps({ query: { slug } }) {
-  console.log(slug);
-
-  const res = await fetch(`${API_URL}/events/?slug=${slug}`);
+  const res = await fetch(`${API_URL}/events?slug=${slug}`);
 
   const events = await res.json();
 
