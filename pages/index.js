@@ -5,7 +5,7 @@ import Layout from '../components/Layout';
 import { API_URL } from '../config/index';
 
 //Components
-import EventItem from '../components/eventItem';
+import EventItem from '../components/EventItem';
 
 const HomePage = ({ events }) => {
   return (

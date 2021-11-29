@@ -1,14 +1,11 @@
 import Layout from '../../components/Layout';
 
-//Next router
-import { Link } from 'next/router';
-
 //Config
 import { API_URL, PER_PAGE } from '../../config/index';
 
 //Components
 import EventItem from '../../components/eventItem';
-import Pagination from '@/components/Pagination';
+import Pagination from '../../components/Pagination';
 
 const EventsPage = ({ events, page, total }) => {
   return (

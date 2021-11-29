@@ -8,7 +8,7 @@ import qs from 'qs';
 import { API_URL } from '../../config/index';
 
 //Components
-import EventItem from '../../components/eventItem';
+import EventItem from '../../components/EventItem';
 
 const SearchPage = ({ events }) => {
   const router = useRouter();
