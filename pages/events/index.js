@@ -4,7 +4,7 @@ import Layout from '../../components/Layout';
 import { API_URL, PER_PAGE } from '../../config/index';
 
 //Components
-import EventItem from '../../components/eventItem';
+import EventItem from '../../components/EventItem';
 import Pagination from '../../components/Pagination';
 
 const EventsPage = ({ events, page, total }) => {

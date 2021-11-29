@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 
-import styles from '../styles/eventItem.module.css';
+import styles from '../styles/EventItem.module.css';
 
 const EventItem = ({ evt }) => {
   return (
