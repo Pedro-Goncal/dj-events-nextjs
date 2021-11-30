@@ -12,7 +12,7 @@ import Layout from '../../components/Layout';
 import { API_URL } from 'config';
 
 //Styles
-import styles from '../../styles/event.module.css';
+import styles from '../../styles/Event.module.css';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
